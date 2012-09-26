@@ -45,6 +45,7 @@ int main(int argc, char ** argv)
     test_SL();
     test_Stack();
     test_Queue();
+    TowersOfHanoi(10);
     
     // NUMERICAL
     test_Numerical();
@@ -58,6 +59,14 @@ int main(int argc, char ** argv)
     // MISC
     test_misc();
    
+    cout << "\n\n\n\n-----------------------------"<<endl;
+    cout << "-----------------------------"<<endl;
+
+    
+    
+    
+    
+    
     
     return 0;
 

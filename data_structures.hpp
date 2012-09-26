@@ -268,6 +268,53 @@ bool test_Stack(){
 
 //--------------------------------------------------------------------
 //
+// STACK IMPLEMENTATION - ARRAYS (because using a vector would be lame)
+//
+//--------------------------------------------------------------------
+
+/*
+template <typename T> class Stack_Array{
+    
+    // use smart pointers here
+    public:
+    
+    Stack_Array(T *arr, const unsigned size ):length(size)
+    {
+    };
+    ~Stack_Array(){};
+        
+    T pop();
+    T peek();
+    void push( const T& );
+    bool is_empty();
+    
+    
+    private:
+    
+    T elements[];
+    unsigned int length;
+};
+
+
+template <typename T> T Stack_Array::pop(){
+    
+}
+
+template <typename T> T Stack_Array::peek(){
+    
+}
+
+template <typename T> T Stack_Array::push( const T& key ){
+    
+}
+
+bool Stack_Array::is_empty(){
+    
+}
+*/
+
+//--------------------------------------------------------------------
+//
 // QUEUE IMPLEMENTATION - POINTERS
 //
 //--------------------------------------------------------------------
@@ -341,8 +388,61 @@ bool test_Queue(){
 //--------------------------------------------------------------------
 //
 // TOWERS OF HANOI SOLVER
+// using a std::vector as a stack implementation
+// three towers, N disks
 //
 //--------------------------------------------------------------------
+
+
+//move the top disk from origin to dest
+template <typename T> void moveTop(vector<T> * origin, vector<T> * dest){
+    if( *(origin->end()-1) > 0  )
+    {   dest->insert(dest->begin(),*(origin->end()-1)); //no want a backinserter here
+        origin->pop_back();
+    }
+}
+
+//move n disks from top of origin to dest using buf
+template <typename T> void moveDisks(unsigned int n, vector<T>* origin, vector<T>* dest, vector<T>* buf ){
+    
+    if( n > 0 )
+    {
+        moveDisks<T>(n-1,origin,dest,buf); //move all n-1 disks from origin to dest using buf
+        moveTop<T>(origin,buf); //buf now has the last element of origin
+        moveDisks<T>(n-1,dest,buf,origin); //now move all n-1 on dest to buf using origin
+    }
+}
+
+
+void TowersOfHanoi(unsigned int N){
+    
+    vector<int> origin, destination, buffer;
+    origin.reserve(N);
+    destination.reserve(N);
+    buffer.reserve(N);
+    
+    for(int i = N-1; i >= 0; --i)
+        origin.push_back(i);
+    
+    cout << "\nOriginal Tower - before:" << endl;
+    copy(origin.begin(),origin.end(),ostream_iterator<int>(cout,"\t"));
+
+    
+    moveDisks<int>(N,&origin, &destination, &buffer );
+    //moveTop(&origin,&destination);
+    //moveTop(&origin,&destination);
+    //moveTop(&origin,&destination);
+    
+    cout << "\nOriginal Tower - after:" << endl;
+    copy(origin.begin(),origin.end(),ostream_iterator<int>(cout,"\t"));
+
+    cout << "\nDestination Tower:" << endl;
+    copy(destination.begin(),destination.end(),ostream_iterator<int>(cout,"\t"));
+
+}
+
+
+
 
 
               
